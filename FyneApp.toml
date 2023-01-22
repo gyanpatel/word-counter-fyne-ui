@@ -1,0 +1,6 @@
+[Details]
+  Icon = "newpiclogan.ico"
+  Name = "WordCounter"
+  ID = "app.wordcounter.bygyan"
+  Version = "1.0.0"
+  Build = 18
