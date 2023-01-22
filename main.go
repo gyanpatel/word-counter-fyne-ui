@@ -14,20 +14,18 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
-	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/widget"
 )
 
-var data = [][]string{[]string{"Word", "Count"}}
+var data = [][]string{{"Word", "Count"}}
 var inputVal []string
 var skipWordVal []string
-var filter = storage.NewExtensionFileFilter([]string{".csv", ".txt", ".CSV", ".TXT"})
 
 func main() {
 	myApp := app.New()
 	myWindow := myApp.NewWindow("Word Counter")
 	saveFile := &fyne.MenuItem{
-		Label: "Save result as csv/txt",
+		Label: "Save result as csv",
 		Action: func() {
 			saveDialog := dialog.NewFileSave(func(write fyne.URIWriteCloser, err error) {
 				if err != nil {
@@ -37,11 +35,6 @@ func main() {
 
 				if write == nil {
 					// user canceled
-					return
-				}
-
-				if !strings.HasSuffix(strings.ToLower(write.URI().String()), ".csv") && !strings.HasSuffix(strings.ToLower(write.URI().String()), ".txt") {
-					dialog.ShowInformation("Error", "Please name your file with a .csv or .txt extension!", myWindow)
 					return
 				}
 
@@ -56,7 +49,6 @@ func main() {
 
 			}, myWindow)
 			saveDialog.SetFileName("wordcount_result.csv")
-			saveDialog.SetFilter(filter)
 			saveDialog.Show()
 		},
 	}
@@ -124,7 +116,7 @@ func main() {
 				}
 				input.Text = text
 			}
-			data = [][]string{[]string{"Word", "Count"}}
+			data = [][]string{{"Word", "Count"}}
 			processWords(outLabel, skipWord.Text, input.Text)
 
 		},
@@ -132,7 +124,7 @@ func main() {
 			input.SetText("")
 			skipWord.SetText("")
 			url.SetText("")
-			data = [][]string{[]string{"Word", "Count"}}
+			data = [][]string{{"Word", "Count"}}
 			table.Refresh()
 
 		},
